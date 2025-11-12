@@ -31,4 +31,13 @@ def Init(bitlen:int = 256) -> tuple[int, int, int]:
 
 
 def block_read_file(path_to_file: str) -> str:
-  return ""
+  res_data: str     = ""
+  data:     bytes   = bytes()
+  with open(path_to_file, 'rb', encoding="utf-8") as f:
+    while True:
+      data = f.read(3)
+      if not data:
+        break
+      res_data += sha3_512_hash(data)
+
+  return res_data
