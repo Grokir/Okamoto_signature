@@ -1,12 +1,19 @@
 from Signature.Okamoto import SecretKey, PublicKey
 
 
-def save_keypair    (sk: SecretKey, pk: PublicKey, path_to_dir:str):
-  with open(path_to_dir+"okamoto_key", 'w') as sk_file:
-    sk_file.write(f"{sk.A()}\n{sk.B()}\n{sk.At()}\n{sk.Bt()}")
+def save_keypair    (sk: SecretKey, pk: PublicKey, path_to_dir:str) -> bool:
+  try:
+  
+    with open(path_to_dir+"okamoto_key", 'w') as sk_file:
+      sk_file.write(f"{sk.A()}\n{sk.B()}\n{sk.At()}\n{sk.Bt()}")
 
-  with open(path_to_dir+"okamoto_key.pub", 'w') as pk_file:
-    pk_file.write(f"{pk.U()}\n{pk.Ut()}")
+    with open(path_to_dir+"okamoto_key.pub", 'w') as pk_file:
+      pk_file.write(f"{pk.U()}\n{pk.Ut()}")
+
+  except:
+    return False
+
+  return True
 
 
 def load_keypair    (path_to_dir:str) -> tuple[SecretKey, PublicKey]:
@@ -66,10 +73,22 @@ def load_public_key (path_to_dir:str) -> PublicKey:
 
 
 
+def save_signature(signature:int, path_to_sign:str):
+  try:
+  
+    with open(path_to_sign, 'w') as sign_file:
+      sign_file.write(f"{signature}")
 
-def save_signature():
-  return
+  except:
+    return False
+
+  return True
 
 
-def load_signature():
-  return
+def load_signature(path_to_sign:str) -> int:
+  sign: int = -1
+  
+  with open(path_to_sign, 'r') as sign_file:
+    sign = int(sign_file.read())
+
+  return sign
