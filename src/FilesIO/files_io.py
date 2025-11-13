@@ -97,7 +97,7 @@ def load_signature(path_to_sign:str) -> int:
 def block_read_file(path_to_file: str) -> str:
   res_data: str     = ""
   data:     bytes   = bytes()
-  with open(path_to_file, 'rb', encoding="utf-8") as f:
+  with open(path_to_file, 'rb') as f:
     while True:
       data = f.read(1024)
       if not data:
