@@ -58,8 +58,8 @@ class OkamotoSign:
       if b_t == b:
         b_t = random.getrandbits(bitlen) % self.__q
     
-    u:      int = ( pow(self.__g, a,   self.__q) * self.__h * b   ) % self.__q
-    u_t:    int = ( pow(self.__g, a_t, self.__q) * self.__h * b_t ) % self.__q
+    u:      int = ( pow(self.__g, a,   self.__q) * pow(self.__h, b,   self.__q) ) % self.__q
+    u_t:    int = ( pow(self.__g, a_t, self.__q) * pow(self.__h, b_t, self.__q) ) % self.__q
 
     sk: SecretKey = SecretKey(a, b, a_t, b_t)
     pk: PublicKey = PublicKey(u, u_t)
@@ -71,11 +71,11 @@ class OkamotoSign:
     c:   int = hex_to_int(sha3_256_hash(message.encode('utf-8')))
     a_z: int = ( sk.At() + sk.A() * c ) % self.__q
     b_z: int = ( sk.Bt() + sk.B() * c ) % self.__q
-    u_z: int = ( self.__g**a_z * self.__h * b_z ) % self.__q
+    u_z: int = ( pow(self.__g, a_z, self.__q) * pow(self.__h, b_z, self.__q) ) % self.__q
 
     return u_z
   
   def Verify(self, message: str, signature: int, pk:PublicKey) -> bool:
     c:   int = hex_to_int(sha3_256_hash(message.encode('utf-8')))
-    rhs: int = pk.Ut() * pk.U()**c % self.__q
+    rhs: int = pk.Ut() * pow(pk.U(), c, self.__q) % self.__q
     return (signature == rhs)
