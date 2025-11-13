@@ -1,6 +1,6 @@
 from Crypto.Random  import random
 from math           import log2, ceil
-from add_funcs      import sha3_256_hash, hex_to_int
+from .add_funcs     import sha3_256_hash, hex_to_int
 
 class SecretKey:
   def __init__(self, a:int, b:int, a_t:int, b_t:int):
