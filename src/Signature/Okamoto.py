@@ -58,8 +58,8 @@ class OkamotoSign:
       if b_t == b:
         b_t = random.getrandbits(bitlen) % self.__q
     
-    u:      int = ( self.__g**a    *  self.__h * b   ) % self.__q
-    u_t:    int = ( self.__g**a_t  *  self.__h * b_t ) % self.__q
+    u:      int = ( pow(self.__g, a,   self.__q) * self.__h * b   ) % self.__q
+    u_t:    int = ( pow(self.__g, a_t, self.__q) * self.__h * b_t ) % self.__q
 
     sk: SecretKey = SecretKey(a, b, a_t, b_t)
     pk: PublicKey = PublicKey(u, u_t)
