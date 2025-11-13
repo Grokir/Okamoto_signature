@@ -1,5 +1,5 @@
-from Signature.Okamoto import SecretKey, PublicKey
-
+from Signature.Okamoto    import SecretKey, PublicKey
+from Signature.add_funcs  import sha3_256_hash
 
 def save_keypair    (sk: SecretKey, pk: PublicKey, path_to_dir:str) -> bool:
   try:
@@ -92,3 +92,16 @@ def load_signature(path_to_sign:str) -> int:
     sign = int(sign_file.read())
 
   return sign
+
+
+def block_read_file(path_to_file: str) -> str:
+  res_data: str     = ""
+  data:     bytes   = bytes()
+  with open(path_to_file, 'rb', encoding="utf-8") as f:
+    while True:
+      data = f.read(1024)
+      if not data:
+        break
+      res_data += sha3_256_hash(data)
+
+  return res_data
