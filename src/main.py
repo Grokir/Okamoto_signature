@@ -6,10 +6,11 @@ from Config             import config
 from Signature          import add_funcs
 from Signature.Okamoto  import OkamotoSign, PublicKey, SecretKey
 from FilesIO            import files_io as fio
-
+from tests              import test  
 
 def help() -> None:
   print("""
+  --test
   --help
   --init-config
   --keygen        <path to dir with keys> 
@@ -18,7 +19,14 @@ def help() -> None:
 """)
 
 
+
+
+
 def main():
+  if "--test" in argv:
+    test()
+    returnt
+
   q: int = -1
   g: int = -1
   h: int = -1
@@ -81,21 +89,15 @@ def main():
         fio.load_public_key(path_to_key)
       )
 
+      print("Document verification: ", end='')
       if(verify_flag):
-        print("The document has been verified!")
+        print("SUCCESS")
       else:
-        print("Error: The document was not verified!")
+        print("FAIL")
 
     case _:
       print("Error: invalid argument!")
       print(f"Execute {argv[0]} with argument '--help'.")
-
-    
-
-
-  print(argv)
-
-  return
 
 
 

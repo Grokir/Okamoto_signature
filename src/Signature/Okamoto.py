@@ -69,13 +69,13 @@ class OkamotoSign:
 
   def Sign(self, message: str, sk:SecretKey) -> int:
     c:   int = hex_to_int(sha3_256_hash(message.encode('utf-8')))
-    a_z: int = ( sk.At() + sk.A() * c ) % self.__q
-    b_z: int = ( sk.Bt() + sk.B() * c ) % self.__q
+    a_z: int = ( sk.At() + sk.A() * c )
+    b_z: int = ( sk.Bt() + sk.B() * c )
     u_z: int = ( pow(self.__g, a_z, self.__q) * pow(self.__h, b_z, self.__q) ) % self.__q
 
     return u_z
   
   def Verify(self, message: str, signature: int, pk:PublicKey) -> bool:
     c:   int = hex_to_int(sha3_256_hash(message.encode('utf-8')))
-    rhs: int = pk.Ut() * pow(pk.U(), c, self.__q) % self.__q
+    rhs: int = ( pk.Ut() * pow(pk.U(), c, self.__q) ) % self.__q
     return (signature == rhs)

@@ -65,8 +65,9 @@ def load_public_key (path_to_dir:str) -> PublicKey:
 
   pk: PublicKey = PublicKey(
     u   = int(pk_list[0]),
-    u_t = int(pk_list[2])
+    u_t = int(pk_list[1])
   )
+  # print(f"u   = {int(pk_list[0])},\nu_t = {int(pk_list[1])}")
 
   return pk
 
@@ -77,7 +78,7 @@ def save_signature(signature:int, path_to_sign:str):
   try:
   
     with open(path_to_sign, 'w') as sign_file:
-      sign_file.write(f"{signature}")
+      sign_file.write(str(signature))
 
   except:
     return False
@@ -89,7 +90,7 @@ def load_signature(path_to_sign:str) -> int:
   sign: int = -1
   
   with open(path_to_sign, 'r') as sign_file:
-    sign = int(sign_file.read())
+    sign = int(sign_file.readline())
 
   return sign
 
