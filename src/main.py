@@ -25,7 +25,7 @@ def help() -> None:
 def main():
   if "--test" in argv:
     test()
-    returnt
+    return
 
   q: int = -1
   g: int = -1

@@ -72,8 +72,6 @@ def load_public_key (path_to_dir:str) -> PublicKey:
   return pk
 
 
-
-
 def save_signature(signature:int, path_to_sign:str):
   try:
   
