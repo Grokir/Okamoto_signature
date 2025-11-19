@@ -4,7 +4,7 @@ from sys import argv
 # project modules
 from Config             import config
 from Signature          import add_funcs
-from Signature.Okamoto  import OkamotoSign, PublicKey, SecretKey
+from Signature.Okamoto  import OkamotoSign
 from FilesIO            import files_io as fio
 from tests              import test_valid, test_invalid  
 
@@ -17,10 +17,7 @@ def help() -> None:
   --signature     <path to message> <path to dir with secret key>
   --verify        <path to message> <path to dir with sign>  <path to dir with public key>
 """)
-
-
-
-
+  
 
 def main():
   if "--test" in argv:
@@ -61,7 +58,7 @@ def main():
       path_to_keys: str = argv[2] if len(argv) > 2 else "./"
       sk, pk = sign_device.KeyGen()
       if fio.save_keypair(sk, pk, path_to_keys):
-        print(f"Keys save to {path_to_keys}!")
+        print(f"Keys save to '{path_to_keys}'!")
       else:
         print("Error: keys save is failed!")
 
