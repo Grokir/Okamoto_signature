@@ -6,7 +6,7 @@ from Config             import config
 from Signature          import add_funcs
 from Signature.Okamoto  import OkamotoSign, PublicKey, SecretKey
 from FilesIO            import files_io as fio
-from tests              import test  
+from tests              import test_valid, test_invalid  
 
 def help() -> None:
   print("""
@@ -24,7 +24,8 @@ def help() -> None:
 
 def main():
   if "--test" in argv:
-    test()
+    test_valid()
+    test_invalid()
     return
 
   q: int = -1
