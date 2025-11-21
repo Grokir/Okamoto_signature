@@ -5,3 +5,4 @@ from .add_funcs import Init
 from .Okamoto   import OkamotoSign
 from .Okamoto   import SecretKey
 from .Okamoto   import PublicKey
+from .Okamoto   import Signature
