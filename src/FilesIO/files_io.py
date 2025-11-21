@@ -1,14 +1,14 @@
-from Signature.Okamoto    import SecretKey, PublicKey
+from Signature.Okamoto    import SecretKey, PublicKey, Signature
 from Signature.add_funcs  import sha3_256_hash
 
 def save_keypair    (sk: SecretKey, pk: PublicKey, path_to_dir:str) -> bool:
   try:
   
     with open(path_to_dir+"okamoto_key", 'w') as sk_file:
-      sk_file.write(f"{sk.A()}\n{sk.B()}\n{sk.At()}\n{sk.Bt()}")
+      sk_file.write(f"{sk.A()}\n{sk.B()}")
 
     with open(path_to_dir+"okamoto_key.pub", 'w') as pk_file:
-      pk_file.write(f"{pk.U()}\n{pk.Ut()}")
+      pk_file.write(f"{pk.U()}")
 
   except:
     return False
@@ -28,14 +28,11 @@ def load_keypair    (path_to_dir:str) -> tuple[SecretKey, PublicKey]:
 
   sk: SecretKey = SecretKey(
     a   = int(sk_list[0]),
-    b   = int(sk_list[1]),
-    a_t = int(sk_list[2]),
-    b_t = int(sk_list[3])
+    b   = int(sk_list[1])
   )
 
   pk: PublicKey = PublicKey(
-    u   = int(pk_list[0]),
-    u_t = int(pk_list[2])
+    u   = int(pk_list[0])
   )
 
   return sk, pk
@@ -49,9 +46,7 @@ def load_private_key(path_to_dir:str) -> SecretKey:
 
   sk: SecretKey = SecretKey(
     a   = int(sk_list[0]),
-    b   = int(sk_list[1]),
-    a_t = int(sk_list[2]),
-    b_t = int(sk_list[3])
+    b   = int(sk_list[1])
   )
 
   return sk
@@ -64,19 +59,17 @@ def load_public_key (path_to_dir:str) -> PublicKey:
     pk_list = pk_file.readlines()
 
   pk: PublicKey = PublicKey(
-    u   = int(pk_list[0]),
-    u_t = int(pk_list[1])
+    u   = int(pk_list[0])
   )
-  # print(f"u   = {int(pk_list[0])},\nu_t = {int(pk_list[1])}")
 
   return pk
 
 
-def save_signature(signature:int, path_to_sign:str):
+def save_signature(signature:Signature, path_to_sign:str):
   try:
   
     with open(path_to_sign, 'w') as sign_file:
-      sign_file.write(str(signature))
+      sign_file.write(f"{signature.Az()}\n{signature.Bz()}\n{signature.Ut()}")
 
   except:
     return False
@@ -84,11 +77,17 @@ def save_signature(signature:int, path_to_sign:str):
   return True
 
 
-def load_signature(path_to_sign:str) -> int:
-  sign: int = -1
+def load_signature(path_to_sign:str) -> Signature:
+  sign_list: list[str] = []
   
   with open(path_to_sign, 'r') as sign_file:
-    sign = int(sign_file.readline())
+    sign_list = sign_file.readlines()
+
+  sign: Signature = Signature(
+    a_z=int(sign_list[0]),
+    b_z=int(sign_list[1]),
+    u_t=int(sign_list[2])
+  )
 
   return sign
 
