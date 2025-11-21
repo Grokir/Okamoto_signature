@@ -1,5 +1,6 @@
 from Config             import config
 from Signature.Okamoto  import OkamotoSign
+from Signature.Okamoto  import Signature
 
 
 def test_valid():
@@ -10,9 +11,9 @@ def test_valid():
   g:    int = int(load['params']['g'], 16)
   h:    int = int(load['params']['h'], 16)
 
-  sign_device: OkamotoSign = OkamotoSign(q, g, h)
-  sk, pk    = sign_device.KeyGen()
-  sign: int = sign_device.Sign(msg, sk)
+  sign_device: OkamotoSign  = OkamotoSign(q, g, h)
+  sk, pk                    = sign_device.KeyGen()
+  sign: Signature           = sign_device.Sign(msg, sk)
   
   if (sign_device.Verify(msg, sign, pk)):
     print("OK")
@@ -29,9 +30,10 @@ def test_invalid():
   g:    int = int(load['params']['g'], 16)
   h:    int = int(load['params']['h'], 16)
 
-  sign_device: OkamotoSign = OkamotoSign(q, g, h)
-  sk, pk    = sign_device.KeyGen()
-  sign: int = sign_device.Sign(msg, sk) + 1
+  sign_device: OkamotoSign  = OkamotoSign(q, g, h)
+  sk, pk                    = sign_device.KeyGen()
+  sign: Signature           = sign_device.Sign(msg, sk)
+  sign = Signature(sign.Az() + 1, sign.Bz(), sign.Ut())
   
   if (not sign_device.Verify(msg, sign, pk)):
     print("OK")
