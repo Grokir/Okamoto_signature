@@ -1,6 +1,6 @@
 # Подпись Окамото / Okamoto signature
 
-# Авторы / Authors
+## Авторы / Authors
  - [Grokir](https://github.com/Grokir)
  - [Konstantin A.S.](https://github.com/KonstantinSaperov)
 
